@@ -1,5 +1,5 @@
 # Language Learning Assistant 
-    Welcome! Croeso! Bienvenido!
+    Welcome! Croeso! Bienvenido! Bonvenon!
 To the README file for the Language Learning Assistant App, a one-stop shop for learning vocabulary in foreign languages. In this file you will find details on how to get the program up and running and some information on how to deal with commonly encountered issues. 
 
 ## 1. Description
