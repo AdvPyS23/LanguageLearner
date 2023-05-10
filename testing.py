@@ -24,9 +24,6 @@ class Vocabulary:
 current_language = None
 current_language_name = None
 
-globals()['current_language_name'] = 'Esperanto'
-
-current_language = Vocabulary()
-current_language.load_data(current_language_name + '.csv')
-animals = current_language.get_words('nature')
-print(animals)
+new_language_name = "Sponglish"
+globals()[new_language_name] = Vocabulary()
+globals()[new_language_name].save_data(new_language_name + '.csv')

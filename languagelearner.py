@@ -58,7 +58,9 @@ def start_newlanguage():
             break
         if event == "Enter":
             languages.append(values[0])
-            globals()[values[0]] = Vocabulary()
+            new_language_name = values[0]
+            globals()[new_language_name] = Vocabulary()
+            globals()[new_language_name].save_data(new_language_name + '.csv')
             break
     window.close()
     startup_window()
