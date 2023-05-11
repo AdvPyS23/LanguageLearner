@@ -33,7 +33,7 @@ class Vocabulary:
         pos = list(self.data['part of speech'].unique())
         return(pos)    
     
-# functions to retreive words based on different identifiers 
+# functions to retrieve words based on different identifiers
     def get_words_topic(self, topic=None):
         if topic:
             return self.data[self.data['topic'] == topic]
