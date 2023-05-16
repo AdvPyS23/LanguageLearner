@@ -72,6 +72,10 @@ class vocabulary:
 
     def load_data(self, filename):
         self.data = pd.read_csv(filename)
+        if not self.data['successes']:
+            self.data['successes'] = 0
+        if not self.data['attempts']:
+            self.data['attempts'] = 0
 
 # Example usage (test case)
     # we dont want to run this every time so nest it in an if statement 

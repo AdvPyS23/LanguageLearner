@@ -17,7 +17,7 @@ The project is aimed at language learners of all levels, from diverse background
 ### 2.1 Dependencies
 
 * Python version 3.11.0 + 
-* Dependency folder containing the saved files for the word lists and the translation links. 
+* Dependency folder containing the saved files for the vocabulary lists. 
 
 ### 2.2 Installing
 
