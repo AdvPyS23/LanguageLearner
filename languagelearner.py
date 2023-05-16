@@ -1,24 +1,37 @@
-# Set Up (import modules)
+# ---------------------------------------------------------------------------
+# Quinn Coxon & Santiago Marin Martinez
+# Advanced Python
+# Language Learning App
+# ---------------------------------------------------------------------------
+
+#%% - Setup
+# Imports
 import pandas as pd
 from os import listdir, getcwd
 import PySimpleGUI as sg
 
-# Define vocabulary class
+# plt canvas
+
+#%% - Functions and Classes
+
+#Def Vocabulary class
 class vocabulary:
+
+    # Function for dataframe and word addition
     def __init__(self):
-        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech','attempts','successes'])
+        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech', 'attempts', 'successes'])
 
     def add_word(self, word, translation, pronunciation, example, topic, pos, attempts = 0, successes = 0):
         new_row = {'word': word, 'translation': translation, 'pronunciation': pronunciation, 'example': example, 'topic': topic, 'part of speech': pos, 'attempts': attempts, 'successes': successes}
-        self.data = pd.concat([self.data,pd.DataFrame([new_row])], ignore_index=True)
+        self.data = pd.concat([self.data, pd.DataFrame([new_row])], ignore_index=True)
     
-    # functions for quiz attempts
+    # Functions for quiz attempts
     def new_attempt(self, word: str, success: bool):
         self.data.loc[self.data['word'] == word, 'attempts'] += 1
         if success:
             self.data.loc[self.data['word'] == word, 'successes'] += 1
     
-    def get_familiarity(self,word):
+    def get_familiarity(self, word):
         row = self.data.loc[self.data['word'] == word]
         attempts = row.at[row.index[0], 'attempts']
         successes = row.at[row.index[0], 'successes']
@@ -33,7 +46,7 @@ class vocabulary:
         pos = list(self.data['part of speech'].unique())
         return(pos)    
     
-# functions to retrieve words based on different identifiers
+    # Retriever functions
     def get_words_topic(self, topic=None):
         if topic:
             return self.data[self.data['topic'] == topic]
@@ -49,7 +62,7 @@ class vocabulary:
         
     #NB. this function takes a float (between 0.0 and 1.0) and returns words with a successes score below that threshold.
     # successes scores will be set as a percentage of correct attempts in quizes 1 = 100%, 0 = 0% etc.
-    def get_words_familiar(self, familiar=None):
+    def get_words_familiar(self, familiar = None):
         if familiar:
             return self.data[self.data['successes'] <= familiar]       
         else:
@@ -60,6 +73,7 @@ class vocabulary:
 
     def load_data(self, filename):
         self.data = pd.read_csv(filename)
+
 
 # Example usage (test case)
     # we dont want to run this every time so nest it in an if statement 
@@ -124,7 +138,7 @@ def quiz_menu():
             globals()['test_set'] = test_set
             quiz_input_window()
             break
-        
+
     window.close()
 
 def quiz_input_window():
@@ -212,7 +226,7 @@ def startup_window():
             break
     startup_window.close()
 
-# Add vocabulary 
+# Add vocabulary
 
 # Define the layout for the word input window
 def add_vocabulary():
@@ -254,5 +268,4 @@ def add_vocabulary():
 
 # Run the program
 startup_window()
-
 
