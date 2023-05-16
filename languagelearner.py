@@ -120,6 +120,7 @@ def quiz_menu():
             # selecting 'at random' will generate 10 random numbers from 1 to nrow in the language df
             # we need a function that extracts the topics and parts of speech in a vocabulary as lists to use
             # familiarity can be a drop down menu of like "very familiar,familar, unfamiliar, unknown" which
+            # also a function to get the length of the df (possibly)
             # in reality correspond to scores like 0.9, 0.7, 0.5, 0.3 or something.
             # this is to do later 
     window.close
