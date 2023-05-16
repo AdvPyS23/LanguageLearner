@@ -242,7 +242,8 @@ def add_vocabulary():
             pronunciation = values['pronunciation']
             example = values['example']
             topic = values['topic']
-            current_language.add_word(word,translation,pronunciation,example,topic)
+            pos = values['part of speech']
+            current_language.add_word(word,translation,pronunciation,example,topic,pos)
 
             sg.popup('Word added successfully!')
         if event == 'Done':
