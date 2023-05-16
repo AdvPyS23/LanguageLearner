@@ -1,24 +1,36 @@
-# Set Up (import modules)
+# ---------------------------------------------------------------------------
+# Quinn Coxon & Santiago Marin Martinez
+# Advanced Python
+# Language Learning App
+# ---------------------------------------------------------------------------
+
+#%% - Setup
+# Imports
 import pandas as pd
 from os import listdir, getcwd
 import PySimpleGUI as sg
 
-# Define Vocabulary class
-class Vocabulary:
+# plt canvas
+
+#%% - Functions and Classes
+
+#Def Vocabulary class
+class vocabulary:
+    # Function for dataframe and word addition
     def __init__(self):
-        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech','attempts','successes'])
+        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech', 'attempts', 'successes'])
 
     def add_word(self, word, translation, pronunciation, example, topic, pos, attempts = 0, successes = 0):
         new_row = {'word': word, 'translation': translation, 'pronunciation': pronunciation, 'example': example, 'topic': topic, 'part of speech': pos, 'attempts': attempts, 'successes': successes}
-        self.data = pd.concat([self.data,pd.DataFrame([new_row])], ignore_index=True)
+        self.data = pd.concat([self.data, pd.DataFrame([new_row])], ignore_index=True)
     
-    # functions for quiz attempts
-    def new_attempt(self,word: str, success: bool):
+    # Functions for quiz attempts
+    def new_attempt(self, word: str, success: bool):
         self.data.loc[self.data['word'] == word, 'attempts'] += 1
         if success:
             self.data.loc[self.data['word'] == word, 'successes'] += 1
     
-    def get_familiarity(self,word):
+    def get_familiarity(self, word):
         row = self.data.loc[self.data['word'] == word]
         attempts = row.at[row.index[0], 'attempts']
         successes = row.at[row.index[0], 'successes']
@@ -49,7 +61,7 @@ class Vocabulary:
         
     #NB. this function takes a float (between 0.0 and 1.0) and returns words with a successes score below that threshold.
     # successes scores will be set as a percentage of correct attempts in quizes 1 = 100%, 0 = 0% etc.
-    def get_words_familiar(self, familiar=None):
+    def get_words_familiar(self, familiar = None):
         if familiar:
             return self.data[self.data['successes'] <= familiar]       
         else:
@@ -64,7 +76,7 @@ class Vocabulary:
 # Example usage (test case)
     # we dont want to run this every time so nest it in an if statement 
 if 1 == 0:
-    French = Vocabulary()
+    French = vocabulary()
     French.add_word('apple', 'une pomme', 'æpl', 'I ate an apple for breakfast.', 'fruits','noun')
     French.add_word('book', 'un livre', 'bʊk', 'I like to read books in my free time.', 'education','noun')
     French.add_word('cat', 'un chat', 'kæt', 'My cat likes to play with string.', 'animals','noun')
@@ -97,7 +109,7 @@ def start_newlanguage():
         if event == "Enter":
             languages.append(values[0])
             new_language_name = values[0]
-            globals()[new_language_name] = Vocabulary()
+            globals()[new_language_name] = vocabulary()
             globals()[new_language_name].save_data(new_language_name + '.csv')
             break
     window.close()
@@ -115,13 +127,15 @@ def quiz_menu():
         if event == sg.WIN_CLOSED:
             break
         if event == 'At random':
+            break
+
             #do something
             # okay so we want dropdown menus for by topic, by part of speech, and by familiarity
             # selecting 'at random' will generate 10 random numbers from 1 to nrow in the language df
             # we need a function that extracts the topics and parts of speech in a vocabulary as lists to use
             # familiarity can be a drop down menu of like "very familiar,familar, unfamiliar, unknown" which
             # in reality correspond to scores like 0.9, 0.7, 0.5, 0.3 or something.
-            # this is to do later 
+            # this is to do later
     window.close
 
 def language_home():
@@ -165,7 +179,7 @@ def startup_window():
             break
         if event != 'New Language...' and event != 'Quit':
             globals()['current_language_name'] = event 
-            globals()['current_language'] = Vocabulary()
+            globals()['current_language'] = vocabulary()
             current_language.load_data(current_language_name + '.csv')
             language_home()
             break

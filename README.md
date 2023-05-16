@@ -11,8 +11,7 @@ The project is aimed at language learners of all levels, from diverse background
 
 ## 2. Getting Started
 
-* At first, the user will be asked to add word objects with details on their language of origin, meaning, and general grammatical categories. These word objects can then be linked by the user to translations in other languages. THis linked data approach will facilitate the user to test there knowledge in a variety of languages at once!
-
+* At first, the user will be asked to add word objects with details on their language of origin, meaning, and general grammatical categories. This allows the user to test himself on a number of aspects besides simple vocabulary, such as semantics, grammar and linguistics. 
 * The program already comes with a small dictionary for Esperanto, which you can play around with to familiarise yourself with the format, before adding your own languages. This CSV file must be downloaded with the program and kept in the same directory. 
 
 ### 2.1 Dependencies
