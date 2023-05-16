@@ -1,21 +1,21 @@
-word,translation,pronunciation,example,category
-saluton,hello,sah-loo-tohn,Saluton! Kiel vi fartas?,greetings
-bonan matenon,good morning,boh-nahn mahteh-nohn,Bonan matenon! Kiel vi dormis?,greetings
-dankon,thank you,dahn-kohn,Dankon pro via helpo!,gratitude
-mi parolas Esperanton,I speak Esperanto,mee pah-roh-lahs eh-speh-rahn-tohn,Mi parolas Esperanton por pliigi miajn lingvajn kapablojn.,language
-kaj,and,kahy,Mi ŝatas legi kaj skribi.,conjunctions
-juna,young,yoo-nah,La juna knabo amas ludi.,age
-granda,big,grahn-dah,La elefanto estas granda besto.,size
-verda,green,vehr-dah,La arboj estas verdoj en la printempo.,colors
-hundo,dog,hoon-doh,Mia hundo estas tre afabla.,animals
-floro,flower,flo-roh,Mi donis florojn al mia patrino.,plants
-kolekti,to collect,koh-lehk-tee,Mi kolektas poŝtmarkojn.,hobbies
-lerni,to learn,lehrr-nee,Mi volas lerni novan lingvon.,education
-manĝi,to eat,mahng-ee,Mi manĝas fruktojn por sanigi min.,food
-vojaĝi,to travel,voyah-jee,Mi amas vojaĝi kaj vidi novajn lokojn.,travel
-aŭto,car,ow-toh,Mia aŭto ne funkcias hodiaŭ.,transportation
-dormi,to sleep,dohrr-mee,Mi bezonas dormi oka horojn ĉiun nokton.,sleep
-tago,day,tah-goh,Hodiaŭ estas bela tago por iri eksteren.,time
-nokto,night,nohk-toh,La steloj brilas en la nokto.,time
-rivero,river,ree-veh-roh,La rivero fluas tra la arbaro.,nature
-maro,sea,mah-roh,La maro estas granda kaj profunda.,nature
+word,translation,pronunciation,example,category,attempts,successes
+saluton,hello,sah-loo-tohn,Saluton! Kiel vi fartas?,greetings,0,0
+bonan matenon,good morning,boh-nahn mahteh-nohn,Bonan matenon! Kiel vi dormis?,greetings,0,0
+dankon,thank you,dahn-kohn,Dankon pro via helpo!,gratitude,4,4
+mi parolas Esperanton,I speak Esperanto,mee pah-roh-lahs eh-speh-rahn-tohn,Mi parolas Esperanton por pliigi miajn lingvajn kapablojn.,language,0,0
+kaj,and,kahy,Mi ŝatas legi kaj skribi.,conjunctions,0,0
+juna,young,yoo-nah,La juna knabo amas ludi.,age,0,0
+granda,big,grahn-dah,La elefanto estas granda besto.,size,0,0
+verda,green,vehr-dah,La arboj estas verdoj en la printempo.,colors,0,0
+hundo,dog,hoon-doh,Mia hundo estas tre afabla.,animals,0,0
+floro,flower,flo-roh,Mi donis florojn al mia patrino.,plants,0,0
+kolekti,to collect,koh-lehk-tee,Mi kolektas poŝtmarkojn.,hobbies,0,0
+lerni,to learn,lehrr-nee,Mi volas lerni novan lingvon.,education,0,0
+manĝi,to eat,mahng-ee,Mi manĝas fruktojn por sanigi min.,food,0,0
+vojaĝi,to travel,voyah-jee,Mi amas vojaĝi kaj vidi novajn lokojn.,travel,0,0
+aŭto,car,ow-toh,Mia aŭto ne funkcias hodiaŭ.,transportation,0,0
+dormi,to sleep,dohrr-mee,Mi bezonas dormi oka horojn ĉiun nokton.,sleep,0,0
+tago,day,tah-goh,Hodiaŭ estas bela tago por iri eksteren.,time,0,0
+nokto,night,nohk-toh,La steloj brilas en la nokto.,time,0,0
+rivero,river,ree-veh-roh,La rivero fluas tra la arbaro.,nature,0,0
+maro,sea,mah-roh,La maro estas granda kaj profunda.,nature,0,0

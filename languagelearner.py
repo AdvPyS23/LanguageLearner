@@ -1,36 +1,24 @@
-# ---------------------------------------------------------------------------
-# Quinn Coxon & Santiago Marin Martinez
-# Advanced Python
-# Language Learning App
-# ---------------------------------------------------------------------------
-
-#%% - Setup
-# Imports
+# Set Up (import modules)
 import pandas as pd
 from os import listdir, getcwd
 import PySimpleGUI as sg
 
-# plt canvas
-
-#%% - Functions and Classes
-
-#Def Vocabulary class
+# Define vocabulary class
 class vocabulary:
-    # Function for dataframe and word addition
     def __init__(self):
-        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech', 'attempts', 'successes'])
+        self.data = pd.DataFrame(columns=['word', 'translation', 'pronunciation', 'example', 'topic', 'part of speech','attempts','successes'])
 
     def add_word(self, word, translation, pronunciation, example, topic, pos, attempts = 0, successes = 0):
         new_row = {'word': word, 'translation': translation, 'pronunciation': pronunciation, 'example': example, 'topic': topic, 'part of speech': pos, 'attempts': attempts, 'successes': successes}
-        self.data = pd.concat([self.data, pd.DataFrame([new_row])], ignore_index=True)
+        self.data = pd.concat([self.data,pd.DataFrame([new_row])], ignore_index=True)
     
-    # Functions for quiz attempts
+    # functions for quiz attempts
     def new_attempt(self, word: str, success: bool):
         self.data.loc[self.data['word'] == word, 'attempts'] += 1
         if success:
             self.data.loc[self.data['word'] == word, 'successes'] += 1
     
-    def get_familiarity(self, word):
+    def get_familiarity(self,word):
         row = self.data.loc[self.data['word'] == word]
         attempts = row.at[row.index[0], 'attempts']
         successes = row.at[row.index[0], 'successes']
@@ -61,7 +49,7 @@ class vocabulary:
         
     #NB. this function takes a float (between 0.0 and 1.0) and returns words with a successes score below that threshold.
     # successes scores will be set as a percentage of correct attempts in quizes 1 = 100%, 0 = 0% etc.
-    def get_words_familiar(self, familiar = None):
+    def get_words_familiar(self, familiar=None):
         if familiar:
             return self.data[self.data['successes'] <= familiar]       
         else:
@@ -72,10 +60,6 @@ class vocabulary:
 
     def load_data(self, filename):
         self.data = pd.read_csv(filename)
-        if not self.data['successes']:
-            self.data['successes'] = 0
-        if not self.data['attempts']:
-            self.data['attempts'] = 0
 
 # Example usage (test case)
     # we dont want to run this every time so nest it in an if statement 
@@ -119,29 +103,68 @@ def start_newlanguage():
     window.close()
     startup_window()
 
+## Quiz stuff
+
 def quiz_menu():
+
     layout = [
         [sg.Text(f"What would you like to test today?",justification='center')],
         [sg.Button('At random'),sg.Button('By Topic')],
         [sg.Button('By familiarity'),sg.Button('By part of speech')],
         [sg.Button('Go back')]]
     window = sg.Window(current_language_name + "quiz",layout)
+
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
             break
         if event == 'At random':
+            test_set = current_language.get_words_topic(topic = None)
+            test_set = test_set[["word","translation"]].sample(n=10).reset_index(drop=True)
+            globals()['test_set'] = test_set
+            quiz_input_window()
             break
+        
+    window.close()
 
-            #do something
-            # okay so we want dropdown menus for by topic, by part of speech, and by familiarity
-            # selecting 'at random' will generate 10 random numbers from 1 to nrow in the language df
-            # we need a function that extracts the topics and parts of speech in a vocabulary as lists to use
-            # familiarity can be a drop down menu of like "very familiar,familar, unfamiliar, unknown" which
-            # in reality correspond to scores like 0.9, 0.7, 0.5, 0.3 or something.
-            # this is to do later
-    window.close
+def quiz_input_window():
+    layout = [
+    [sg.Text('QUIZ')],
+    [sg.Text(test_set['word'][0]), sg.InputText(key=0)],
+    [sg.Text(test_set['word'][1]), sg.InputText(key=1)],
+    [sg.Text(test_set['word'][2]), sg.InputText(key=2)],
+    [sg.Text(test_set['word'][3]), sg.InputText(key=3)],
+    [sg.Text(test_set['word'][4]), sg.InputText(key=4)],
+    [sg.Text(test_set['word'][5]), sg.InputText(key=5)],
+    [sg.Text(test_set['word'][6]), sg.InputText(key=6)],
+    [sg.Text(test_set['word'][7]), sg.InputText(key=7)],
+    [sg.Text(test_set['word'][8]), sg.InputText(key=8)],
+    [sg.Text(test_set['word'][9]), sg.InputText(key=9)],
+    [sg.Button('Submit'), sg.Button('Quit')]
+]
+    window = sg.Window("Quiz", layout)
 
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        if event == 'Submit':
+            score = 0
+            for i in range(10):
+                if values[i].lower() == test_set['translation'][i].lower():
+                    correct = True
+                    score += 1
+                else:
+                    correct = False
+                current_language.new_attempt(word = test_set['word'][i], success = correct)
+            current_language.save_data(current_language_name + '.csv')
+            print(f"Your score is: {score}/10")
+
+
+
+    window.close()
+
+    # other stuff
 def language_home():
     layout = [
         [sg.Text(f"Let's get ready to learn some {current_language_name}!",justification='center')],
@@ -161,7 +184,7 @@ def language_home():
         if event == 'Quiz':
             quiz_menu()
             break
-    window.close
+    window.close()
             
             
 # Startup Window
@@ -189,7 +212,7 @@ def startup_window():
             break
     startup_window.close()
 
-# Add Vocabulary 
+# Add vocabulary 
 
 # Define the layout for the word input window
 def add_vocabulary():
@@ -219,8 +242,8 @@ def add_vocabulary():
             pronunciation = values['pronunciation']
             example = values['example']
             topic = values['topic']
-            #new_word =(word,translation,pronunciation,example,topic)
             current_language.add_word(word,translation,pronunciation,example,topic)
+
             sg.popup('Word added successfully!')
         if event == 'Done':
             current_language.save_data(current_language_name + '.csv')
@@ -231,4 +254,5 @@ def add_vocabulary():
 
 # Run the program
 startup_window()
+
 
