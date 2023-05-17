@@ -61,6 +61,10 @@ class vocabulary:
     def load_data(self, filename):
         self.data = pd.read_csv(filename)
 
+    def reset(self):
+        self.data[['attempts','successes']] = 0
+
+
 # Example usage (test case)
     # we dont want to run this every time so nest it in an if statement 
 if 1 == 0:
@@ -106,25 +110,27 @@ def start_newlanguage():
 ## Quiz stuff
 
 def quiz_menu():
+    topics_list = current_language.get_topics()
+    pos_list = current_language.get_pos()
 
     layout = [
-        [sg.Text(f"What would you like to test today?",justification='center')],
-        [sg.Button('At random'),sg.Button('By Topic')],
-        [sg.Button('By familiarity'),sg.Button('By part of speech')],
-        [sg.Button('Go back')]]
+            [sg.Text(f'Choose a topic or part of speech to work on. To do a random quiz, select none.',justification='center')],
+            [sg.Text('By topic:'),sg.DropDown(topics_list, key='topic_dropdown')],
+            [sg.Text('By part of speech:'),sg.DropDown(pos_list, key='pos_dropdown')],
+            [sg.Button("Let's go!"),sg.Button('Go back')]]
     window = sg.Window(current_language_name + "quiz",layout)
 
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
             break
-        if event == 'At random':
-            test_set = current_language.get_words_topic(topic = None)
+        if event == "Let's go!":
+            test_set = current_language.get_words_topic(topic = values['topic_dropdown'])
+            test_set = pd.merge(test_set,current_language.get_words_pos(pos = values['pos_dropdown']))
             test_set = test_set[["word","translation"]].sample(n=10, replace = True).reset_index(drop=True)
             globals()['test_set'] = test_set
             quiz_input_window()
-            break
-        
+            break        
     window.close()
 
 def quiz_input_window():
@@ -250,5 +256,9 @@ startup_window()
 if 1 == 0:
     Esperanto = vocabulary()
     Esperanto.load_data("Esperanto.csv")
+    topics_list = Esperanto.get_topics()
     pos_list = Esperanto.get_pos()
+    #print(topics_list)
     print(pos_list)
+    Esperanto.reset()
+    Esperanto.save_data("Esperanto.csv")

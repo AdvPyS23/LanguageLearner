@@ -2,7 +2,7 @@ word,translation,pronunciation,example,topic,part of speech,attempts,successes
 saluton,hello,sah-loo-tohn,Saluton! Kiel vi fartas?,misc,noun,0,0
 bonan matenon,good morning,boh-nahn mahteh-nohn,Bonan matenon! Kiel vi dormis?,misc,noun,0,0
 dankon,thank you,dahn-kohn,Dankon pro via helpo!,misc,noun,0,0
-kiel,how,kee-el,Kiel vi fartas?,misc,adverb,1,0
+kiel,how,kee-el,Kiel vi fartas?,misc,adverb,0,0
 Mi,I,mee,Mi parolas Esperanton.,misc,pronoun,0,0
 sian,his/her/its/one's,see-ahn,Li montras sian amon.,misc,pronoun,0,0
 ke,that,keh,Mi scias  ke vi estas prava.,misc,conjunction,0,0
@@ -18,12 +18,12 @@ esti,to be,eh-stee,Mi esperas esti feliĉa.,misc,verb,0,0
 havos,will have,hah-vohs,Mi havos tempon por viziti vin.,misc,verb,0,0
 tiu,that,tee-oo,Tiu estas mia domo.,misc,pronoun,0,0
 el,from,ehl,Mi ricevis leteron el Germanio.,misc,preposition,0,0
-per,by,pehr,Mi skribis la leteron per plumo.,misc,preposition,1,0
+per,by,pehr,Mi skribis la leteron per plumo.,misc,preposition,0,0
 varmega,hot,var-meh-gah,Estas varmega somero.,misc,adjective,0,0
 sed,but,sehd,Mi volas iri  sed mi ne havas tempon.,misc,conjunction,0,0
 kio,what,kee-oh,Kio estas via nomo?,misc,pronoun,0,0
 iuj,some,ee-ooy,Mi konas iujn el ili.,misc,adjective,0,0
-ĝi,it,jee,Ĝi estas interesanta.,misc,pronoun,1,0
+ĝi,it,jee,Ĝi estas interesanta.,misc,pronoun,0,0
 vi,you,vee,Vi estas tre aminda.,misc,pronoun,0,0
 la,the,lah,La suno brilas.,misc,article,0,0
 por,for,pohr,Mi faras tion por vi.,misc,preposition,0,0
@@ -43,13 +43,13 @@ nokto,night,nohk-toh,La steloj brilas en la nokto.,time,noun,0,0
 rivero,river,ree-veh-roh,La rivero fluas tra la arbaro.,nature,noun,0,0
 maro,sea,mah-roh,La maro estas granda kaj profunda.,nature,noun,0,0
 sarki,archery,sahr-kee,Mi ŝatas praktiki sarkion en mia libera tempo.,hobbies,noun,0,0
-pikniki,to have a picnic,peek-nee-kee,Mi amuziĝas piknikante kun mia familio.,hobbies,verb,1,0
+pikniki,to have a picnic,peek-nee-kee,Mi amuziĝas piknikante kun mia familio.,hobbies,verb,0,0
 arbo,tree,ahr-boh,Sub la arbo mi trovis ombregon.,nature,noun,0,0
 herbo,grass,hehr-boh,La herbo estas verda post la pluvo.,nature,noun,0,0
 montaro,mountain range,mohn-tah-roh,La montaro estas spektakla vidindaĵo.,nature,noun,0,0
 flugo,butterfly,floo-go,La flugoj de la flugiloj estas belaj.,nature,noun,0,0
 sovaĝa,wild,soh-vah-jah,La sovaĝaj bestoj vivas senlimige.,nature,adjective,0,0
-ĝardeno,garden,jahr-deh-noh,Mi laboras en mia bela ĝardeno.,nature,noun,1,1
+ĝardeno,garden,jahr-deh-noh,Mi laboras en mia bela ĝardeno.,nature,noun,0,0
 roko,rock,roh-ko,La rokoj staras fikse sur la tero.,nature,noun,0,0
 ĉielo,sky,chee-eh-loh,La ĉielo estas plena de steloj.,nature,noun,0,0
 vivo,life,vee-vo,La naturo estas plena de diverseco de vivo.,nature,noun,0,0
@@ -66,24 +66,24 @@ pluvo,rain,ploo-vo,La pluvo falas delikate sur la teron.,nature,noun,0,0
 vento,wind,ven-toh,La vento blovas vigle tra la kampo.,nature,noun,0,0
 hundo,dog,hoon-doh,Mia hundo estas tre afabla.,animals,noun,0,0
 kato,cat,kah-toh,La kato dormas sur la fenestrobreto.,animals,noun,0,0
-birdo,bird,beer-doh,La birdoj kantis dolĉe en la arboj.,animals,noun,1,1
+birdo,bird,beer-doh,La birdoj kantis dolĉe en la arboj.,animals,noun,0,0
 fiŝo,fish,fee-shoh,Mi manĝas freŝajn fiŝojn ĉe la marbordo.,animals,noun,0,0
 leono,lion,leh-oh-noh,La leono estas la reĝo de la savano.,animals,noun,0,0
 elefanto,elephant,eh-leh-fahn-toh,La elefanto estas grandega kaj potenca.,animals,noun,0,0
 pingveno,penguin,peeng-veh-noh,La pingvenoj vivas en malvarmaj regionoj.,animals,noun,0,0
-ŝafo,sheep,shah-foh,La ŝafoj paŝtas sur la verda herbejo.,animals,noun,1,1
+ŝafo,sheep,shah-foh,La ŝafoj paŝtas sur la verda herbejo.,animals,noun,0,0
 tigro,tiger,tee-groh,La tigro saltis el la densa arbaro.,animals,noun,0,0
 ĉevalo,horse,cheh-vah-loh,Mi amas rajdi sur mia ĉevalo.,animals,noun,0,0
 ruĝa,red,roo-jah,La ruĝaj floroj brilas en la kampo.,animals,adjective,0,0
 serpento,snake,ser-pen-toh,La serpento svingis sian korpon.,animals,noun,0,0
 kuniklo,rabbit,koo-nee-kloh,La kuniklo saltis rapide inter la arboj.,animals,noun,0,0
-simio,monkey,see-mee-oh,La simioj svingiĝas de branĉo al branĉo.,animals,noun,1,1
-birdo,bird,beer-doh,La birdoj flugis en formo de V.,animals,noun,1,1
+simio,monkey,see-mee-oh,La simioj svingiĝas de branĉo al branĉo.,animals,noun,0,0
+birdo,bird,beer-doh,La birdoj flugis en formo de V.,animals,noun,0,0
 lundo,Monday,loohn-doh,Mi renkontos vin lundon matene.,time,noun,0,0
 mardo,Tuesday,mahr-doh,La renkontiĝo estas mardon vespere.,time,noun,0,0
 merkredo,Wednesday,mer-kreh-doh,Mi havas renkonton ĉiun merkredon.,time,noun,0,0
 ĵaŭdo,Thursday,zhah-oo-doh,Mi planas viziti vin ĵaŭdon posttagmeze.,time,noun,0,0
-vendredo,Friday,ven-dreh-doh,Mi finos mian laboron vendredon vespere.,time,noun,1,0
+vendredo,Friday,ven-dreh-doh,Mi finos mian laboron vendredon vespere.,time,noun,0,0
 sabato,Saturday,sah-bah-toh,La festo okazos sabaton matene.,time,noun,0,0
 dimanĉo,Sunday,dee-mahn-choh,Dimanĉo estas la tago por ripozi kaj relaxi.,time,noun,0,0
 antaŭ,before,ahn-taow,Mi venos antaŭ la vespermanĝo.,time,preposition,0,0
@@ -109,7 +109,7 @@ kimra,Welsh,keem-rah,Mi ŝatas la kimran kulturon kaj tradiciojn.,language,adjec
 aŭto,car,ow-toh,Mia aŭto ne funkcias hodiaŭ.,transportation,noun,0,0
 aŭto,car,ow-toh,Mia aŭto estas ruĝa.,transportation,noun,0,0
 trajno,train,trahy-no,Mi veturos per trajno al la urbo.,transportation,noun,0,0
-ŝipo,ship,shee-poh,Ŝipoj naĝas sur la maro.,transportation,noun,1,1
+ŝipo,ship,shee-poh,Ŝipoj naĝas sur la maro.,transportation,noun,0,0
 avio,airplane,ah-vee-oh,La avio flugas rapide.,transportation,noun,0,0
 buso,bus,boo-so,Mi prenos la buson por iri al la centro.,transportation,noun,0,0
 biciklo,bicycle,bee-tsee-klo,Mi ŝatas veturi per biciklo.,transportation,noun,0,0
