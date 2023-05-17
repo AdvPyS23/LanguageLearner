@@ -120,7 +120,7 @@ def quiz_menu():
             break
         if event == 'At random':
             test_set = current_language.get_words_topic(topic = None)
-            test_set = test_set[["word","translation"]].sample(n=10).reset_index(drop=True)
+            test_set = test_set[["word","translation"]].sample(n=10, replace = True).reset_index(drop=True)
             globals()['test_set'] = test_set
             quiz_input_window()
             break
@@ -128,20 +128,9 @@ def quiz_menu():
     window.close()
 
 def quiz_input_window():
-    layout = [
-    [sg.Text('QUIZ')],
-    [sg.Text(test_set['word'][0]), sg.InputText(key=0)],
-    [sg.Text(test_set['word'][1]), sg.InputText(key=1)],
-    [sg.Text(test_set['word'][2]), sg.InputText(key=2)],
-    [sg.Text(test_set['word'][3]), sg.InputText(key=3)],
-    [sg.Text(test_set['word'][4]), sg.InputText(key=4)],
-    [sg.Text(test_set['word'][5]), sg.InputText(key=5)],
-    [sg.Text(test_set['word'][6]), sg.InputText(key=6)],
-    [sg.Text(test_set['word'][7]), sg.InputText(key=7)],
-    [sg.Text(test_set['word'][8]), sg.InputText(key=8)],
-    [sg.Text(test_set['word'][9]), sg.InputText(key=9)],
-    [sg.Button('Submit'), sg.Button('Quit')]
-]
+    layout =  [[sg.Text('Enter the translation next to each word.')] ]
+    layout += [[sg.Text(test_set['word'][i]), sg.InputText()] for i in range(10)]
+    layout += [[sg.Button('Submit'), sg.Button('Quit')]]
     window = sg.Window("Quiz", layout)
 
     while True:
@@ -257,3 +246,9 @@ def add_vocabulary():
 startup_window()
 
 
+# testing arena
+if 1 == 0:
+    Esperanto = vocabulary()
+    Esperanto.load_data("Esperanto.csv")
+    pos_list = Esperanto.get_pos()
+    print(pos_list)
