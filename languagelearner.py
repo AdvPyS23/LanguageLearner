@@ -125,9 +125,14 @@ def quiz_menu():
         if event == sg.WIN_CLOSED:
             break
         if event == "Let's go!":
+            N = 10 # (we could add functionality to change test size later)
             test_set = current_language.get_words_topic(topic = values['topic_dropdown'])
             test_set = pd.merge(test_set,current_language.get_words_pos(pos = values['pos_dropdown']))
-            test_set = test_set[["word","translation"]].sample(n=10, replace = True).reset_index(drop=True)
+            if len(test_set) < N:
+                replace = True
+            else:
+                replace = False
+            test_set = test_set[["word","translation"]].sample(n=N, replace = replace).reset_index(drop=True)
             globals()['test_set'] = test_set
             quiz_input_window()
             break        
