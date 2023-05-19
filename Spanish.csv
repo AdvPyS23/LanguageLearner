@@ -1,0 +1,23 @@
+word,translation,pronunciation,example,topic,part of speech,attempts,successes
+Hola,Hello,o-la,Hola! Qué tal?,Greetings,Interjection,0,0
+Gato,Cat,ga-to,El gato negro come pescado.,Animals,Noun,0,0
+Casa,House,ka-sa,Mi casa es tu casa.,Architecture,Noun,2,1
+Comida,Food,ko-mi-da,Me gusta probar comida nueva.,Culinary,Noun,3,2
+Amigo,Friend,amigo,fi-rend,Mi mejor amigo siempre me apoya.,Relationships,Noun,5,4
+Bueno,Good,bwe-no,¡Hiciste un buen trabajo!,Qualities,Adjective,6,6
+Playa,Beach,plaj-a,Vamos a la playa este fin de semana.,Nature,Noun,4,3
+Libro,Book,li-bro,Me encanta perderme en un buen libro.,Education,Noun,7,7
+Jugar,To play,hu-gar,Me gusta jugar al fútbol los fines de semana.,Sports,Verb,8,7
+Trabajo,Work,tra-ba-ho,Tengo mucho trabajo que hacer esta semana.,Occupation,Noun,5,3
+Perro,Dog,pe-ro,El perro ladra fuerte.,Animals,Noun,6,5
+Lluvia,Rain,ʎu-bia,Me gusta escuchar el sonido de la lluvia.,Weather,Noun,9,8
+Café,Coffee,ka-fe,¿Podemos tomar un café juntos?,Drinks,Noun,7,6
+Canción,Song,kan-ˈsion,Me aprendí la letra de esa canción.,Entertainment,Noun,4,2
+Viaje,Trip,ˈbja-he,Hicimos un viaje increíble el verano pasado.,Travel,Noun,8,7
+Fiesta,Party,fje-sta,¡La fiesta de cumpleaños fue todo un éxito!,Celebrations,Noun,6,5
+Dormir,To sleep,dor-ˈmir,Después de un largo día, solo quiero dormir.,Activities,Verb,7,7
+Feliz,Happy,fe-lis,¡Le deseo un cumpleaños muy feliz!,Emotions,Adjective,3,2
+Estudiar,To study,es-tu-ˈdi-ar,Tengo que estudiar para el examen de mañana.,Education,Verb,9,8
+Montaña,Mountain,mon-ˈta-ɲa,Me encanta hacer senderismo en las montañas.,Nature,Noun,6,4
+Familia,Family,fa-mi-ˈli-a,Disfruté pasar tiempo con mi familia en las vacaciones.,Relationships,Noun,7,7
+Cocinar,To cook,ko-ˈsi-nar,Me gusta cocinar nuevas recetas.,Culinary,Verb,5,4
