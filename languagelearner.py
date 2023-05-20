@@ -7,9 +7,16 @@
 #%% - Setup
 
 # Import Libraries
+import numpy as np
 import pandas as pd
 from os import listdir, getcwd
 import PySimpleGUI as sg
+import matplotlib.pyplot as plt
+import matplotlib.backends.backend_tkagg as tk
+
+# Canvas Setup
+plt.rcParams['figure.dpi'] = 100
+plt.rcParams['savefig.dpi'] = 100
 
 # Define vocabulary class
 class vocabulary:
@@ -37,13 +44,6 @@ class vocabulary:
         if success:
             self.data.loc[self.data['word'] == word, 'successes'] += 1
 
-    def get_familiarity(self,word):
-        row = self.data.loc[self.data['word'] == word]
-        attempts = row.at[row.index[0], 'attempts']
-        successes = row.at[row.index[0], 'successes']
-        familiarity = successes/attempts
-        return(familiarity)
-
     def get_topics(self):
         topics = list(self.data['topic'].unique())
         return(topics)
@@ -52,11 +52,32 @@ class vocabulary:
         pos = list(self.data['part of speech'].unique())
         return(pos)
 
+    def familiarities(self):
+        familiarities = self.data['successes'] / self.data['attempts']
+        familiarities = familiarities.replace(np.NaN, 0)
+        return(familiarities)
+
+    def get_familiarity(self, word):
+        row = self.data['word'].str.match(word)
+        familiarities = self.familiarities()
+        familiarity = familiarities[row]
+        return(familiarity)
+
+    def completed(self):
+        familiarities = self.familiarities()
+        completed_words = pd.DataFrame(columns = self.data.columns)
+        for i in range(self.data.shape[0]):
+            if self.data['attempts'][i] >= 10 and familiarities[i] >= 0.8:
+                completed_words.append(self.data.loc[i])
+        return(completed_words)
+
+
+
+
     #Identifier functions (Retrieves words from identifier)
     def get_words_topic(self, topic=None):
         if topic:
             return self.data[self.data['topic'] == topic]
-
         else:
             return self.data
 
@@ -66,12 +87,12 @@ class vocabulary:
         else:
             return self.data
 
-    def get_words_familiar(self, familiar=None):
+    def get_words_familiar(self, lower = 0, upper = 1):
+        fam_col = self.familiarities()
         #Takes float as percentage of correct attempts and threshold filters vocabulary
-        if familiar:
-            return self.data[self.data['successes'] <= familiar]
-        else:
-            return self.data
+        return(pd.merge(self.data[fam_col >= lower], self.data[fam_col <= upper]))
+
+
 
 # Find languages already stored
 path = getcwd()
@@ -137,8 +158,8 @@ def start_newlanguage():
 def language_home():
     layout = [
         [sg.Text(f"Let's get ready to learn some {current_language_name}!",justification='center')],
-        [sg.Button('Input'),sg.Button('Quiz')],
-        [sg.Button('View Progress'),sg.Button('Go Back')]]
+        [sg.Button('Input'), sg.Button('Quiz')],
+        [sg.Button('View Progress'), sg.Button('Go Back')]]
     window = sg.Window(current_language_name,layout)
     while True:
         event, values = window.read()
@@ -151,6 +172,9 @@ def language_home():
         if event == 'Quiz':
             quiz_menu()
 
+        if event == 'View Progress':
+            progress_menu()
+
     window.close()
 
 
@@ -158,12 +182,14 @@ def language_home():
 def quiz_menu():
     topics_list = current_language.get_topics()
     pos_list = current_language.get_pos()
+    dif_list = ['Easy', 'Medium', 'Hard']
 
     layout = [
             [sg.Text(f'Setup your quiz - Leave empty for random', justification='center')],
             [sg.Text(f'Number of words'), sg.Input(key='n_words')],
             [sg.Text('By topic:'), sg.DropDown(topics_list, key='topic_dropdown')],
             [sg.Text('By part of speech:'), sg.DropDown(pos_list, key='pos_dropdown')],
+            [sg.Text('By difficulty:'), sg.DropDown(dif_list, key = 'dif_dropdown')],
             [sg.Button("Let's go!"), sg.Button('Go back')]]
     window = sg.Window(current_language_name + "Quiz", layout)
 
@@ -173,9 +199,28 @@ def quiz_menu():
             break
 
         if event == "Let's go!":
+            #Topic and POS setting
             test_set = current_language.get_words_topic(topic = values['topic_dropdown'])
             test_set = pd.merge(test_set,current_language.get_words_pos(pos = values['pos_dropdown']))
-            #Check that number of words has been given
+
+            #Difficulty setting
+            if values['dif_dropdown']:
+                if values['dif_dropdown'] == 'Easy':
+                    lower = 0.7
+                    upper = 1
+                if values['dif_dropdown'] == 'Medium':
+                    lower = 0.4
+                    upper = 0.7
+                if values['dif_dropdown'] == 'Hard':
+                    lower = 0
+                    upper = 0.4
+                test_set = pd.merge(test_set, current_language.get_words_familiar(lower, upper))
+            if test_set.shape[0] == 0:
+                sg.popup('No vocabulary available with these settings. Please change the values in the quiz setup page.')
+                window.close()
+                quiz_menu()
+
+            #Number of words setting
             if values['n_words']:
                 #Check that Number of words are numbers or empty
                 if values['n_words'][-1] not in ('0123456789'):
@@ -189,9 +234,9 @@ def quiz_menu():
             #Check that it is smaller than full test set
             if n_words <= test_set.shape[0]:
                 test_set = test_set[["word", "translation"]].sample(n=n_words, replace = True).reset_index(drop=True)
-            #Else full test set
             else:
                 test_set = test_set[["word", "translation"]].sample(n=test_set.shape[0], replace = True).reset_index(drop=True)
+
             #Set test_set as global variable
             globals()['test_set'] = test_set
             quiz_input_window()
@@ -303,19 +348,93 @@ def add_vocabulary():
     word_input_window.close()
 
 
+# Progress window layout
+def progress_layout(data_set, event):
+    #Save data_set into temporary language
+    temp_lang = vocabulary()
+    temp_lang.data = data_set
+
+    #Use functions to retrieve relevant data
+    fam_list = temp_lang.familiarities()
+    com_list = temp_lang.completed()
+
+    #Reset matplotlib canvas
+    plt.clf()
+    fig = plt.figure(1)
+
+    #Plot histogram using data_set
+    fig.add_subplot(111).hist(fam_list, bins=10, range=(0,1), density = True)
+    plt.xlabel('Familiarity [as float percentage]')
+    plt.ylabel('Density [as float percentage]')
+    plt.title(f'{event} Histogram in {current_language_name}')
+
+    #Layout for progress window
+    layout = [
+        [sg.Menu(prog_menu)],
+        [sg.Canvas(key='Canvas')],
+        [sg.Text(f'Total number of attempts: {sum(temp_lang.data["attempts"])}'),
+         sg.Text(f'Total number of successes: {sum(temp_lang.data["successes"])}')],
+        [sg.Text(f'Average familiarity: {sum(fam_list) / len(fam_list):.2%}'),
+         sg.Text(f'Median familiarity: {fam_list.median()}')],
+        [sg.Text(f'Number of completed: {len(com_list)}'),
+         sg.Text(f'Percentage of completed: {len(com_list) / len(fam_list):.2%}')],
+        [sg.Text(f'Words count as completed when a word has more than 80% familiarity on 10 or more attempts.')],
+        [sg.Button('Back')]
+    ]
+
+    #Draw window and return
+    window = sg.Window('Progress', layout, finalize=True)
+    fig_canvas_agg = draw_figure(window['Canvas'].TKCanvas, fig)
+    return(window)
+
+
+# Progress window setup and event loop
+def progress_menu():
+    #Get full language data
+    topics_list = current_language.get_topics()
+    pos_list = current_language.get_pos()
+    fam_list = current_language.familiarities()
+    com_list = current_language.completed()
+
+    #Setup Menubar
+    globals()['prog_menu'] = [
+        ['All',['Global']],
+        ['Topic',topics_list],
+        ['Part of Speech',pos_list],
+    ]
+
+    #Use progress_layout function to draw initial window
+    window = progress_layout(current_language.data, 'Global')
+
+    #Event loop changes window according to event
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == 'Back':
+            break
+        else:
+            if event in topics_list:
+                data_set = current_language.get_words_topic(topic = event).reset_index()
+            if event in pos_list:
+                data_set = current_language.get_words_pos(pos = event).reset_index()
+            if event == 'Global':
+                data_set = current_language.data
+            window.close()
+            window = progress_layout(data_set, event)
+
+    window.close()
+
+
+# Figure function for histograms
+def draw_figure(canvas, figure):
+   figure_canvas_agg = tk.FigureCanvasTkAgg(figure, canvas)
+   figure_canvas_agg.draw()
+   figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+   return figure_canvas_agg
+
+
 
 #%% - RUN
+Esperanto = vocabulary()
+Esperanto.load_data("Esperanto.csv")
 
 startup_window()
-
-
-#%% - Testing
-if 1 == 0:
-    Esperanto = vocabulary()
-    Esperanto.load_data("Esperanto.csv")
-    topics_list = Esperanto.get_topics()
-    pos_list = Esperanto.get_pos()
-    #print(topics_list)
-    print(pos_list)
-    Esperanto.reset()
-    Esperanto.save_data("Esperanto.csv")
