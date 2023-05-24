@@ -222,20 +222,20 @@ def quiz_menu():
 
             #Number of words setting
             if values['n_words']:
-                #Check that Number of words are numbers or empty
-                if values['n_words'][-1] not in ('0123456789'):
+                # Use try statement to makesure input number of words is interpretable as an integer 
+                try:
+                    n_words = int(values['n_words'])
+                except:
                     sg.popup("Only digits for 'Number of words' allowed")
                     window.close()
                     quiz_menu()
-                else:
-                    n_words = int(values['n_words'])
             else:
                 n_words = 10
             #Check that it is smaller than full test set
             if n_words <= test_set.shape[0]:
-                test_set = test_set[["word", "translation"]].sample(n=n_words, replace = True).reset_index(drop=True)
+                test_set = test_set[["word", "translation"]].sample(n=n_words, replace = False).reset_index(drop=True)
             else:
-                test_set = test_set[["word", "translation"]].sample(n=test_set.shape[0], replace = True).reset_index(drop=True)
+                test_set = test_set[["word", "translation"]].sample(n=test_set.shape[0], replace = False).reset_index(drop=True)
 
             #Set test_set as global variable
             globals()['test_set'] = test_set
