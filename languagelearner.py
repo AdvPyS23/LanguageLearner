@@ -202,15 +202,48 @@ def quiz_menu():
             #Topic and POS setting
             test_set = current_language.get_words_topic(topic = values['topic_dropdown'])
             test_set = pd.merge(test_set,current_language.get_words_pos(pos = values['pos_dropdown']))
-            
-            test_set = test_set[["word","translation"]].sample(n=10, replace = True).reset_index(drop=True)
+
+            #Difficulty setting
+            if values['dif_dropdown']:
+                if values['dif_dropdown'] == 'Easy':
+                    lower = 0.7
+                    upper = 1
+                if values['dif_dropdown'] == 'Medium':
+                    lower = 0.4
+                    upper = 0.7
+                if values['dif_dropdown'] == 'Hard':
+                    lower = 0
+                    upper = 0.4
+                test_set = pd.merge(test_set, current_language.get_words_familiar(lower, upper))
+            if test_set.shape[0] == 0:
+                sg.popup('No vocabulary available with these settings. Please change the values in the quiz setup page.')
+                window.close()
+                quiz_menu()
+
+            #Number of words setting
+            if values['n_words']:
+                #Check that Number of words are numbers or empty
+                if values['n_words'][-1] not in ('0123456789'):
+                    sg.popup("Only digits for 'Number of words' allowed")
+                    window.close()
+                    quiz_menu()
+                else:
+                    n_words = int(values['n_words'])
+            else:
+                n_words = 10
+            #Check that it is smaller than full test set
+            if n_words <= test_set.shape[0]:
+                test_set = test_set[["word", "translation"]].sample(n=n_words, replace = True).reset_index(drop=True)
+            else:
+                test_set = test_set[["word", "translation"]].sample(n=test_set.shape[0], replace = True).reset_index(drop=True)
+
+            #Set test_set as global variable
             globals()['test_set'] = test_set
             quiz_input_window()
 
 
         if event == "Go back":
             break
-
 
     window.close()
 
@@ -314,19 +347,94 @@ def add_vocabulary():
 
     word_input_window.close()
 
-# Run the program
+
+# Progress window layout
+def progress_layout(data_set, event):
+    #Save data_set into temporary language
+    temp_lang = vocabulary()
+    temp_lang.data = data_set
+
+    #Use functions to retrieve relevant data
+    fam_list = temp_lang.familiarities()
+    com_list = temp_lang.completed()
+
+    #Reset matplotlib canvas
+    plt.clf()
+    fig = plt.figure(1)
+
+    #Plot histogram using data_set
+    fig.add_subplot(111).hist(fam_list, bins=10, range=(0,1), density = True)
+    plt.xlabel('Familiarity [as float percentage]')
+    plt.ylabel('Density [as float percentage]')
+    plt.title(f'{event} Histogram in {current_language_name}')
+
+    #Layout for progress window
+    layout = [
+        [sg.Menu(prog_menu)],
+        [sg.Canvas(key='Canvas')],
+        [sg.Text(f'Total number of attempts: {sum(temp_lang.data["attempts"])}'),
+         sg.Text(f'Total number of successes: {sum(temp_lang.data["successes"])}')],
+        [sg.Text(f'Average familiarity: {sum(fam_list) / len(fam_list):.2%}'),
+         sg.Text(f'Median familiarity: {fam_list.median()}')],
+        [sg.Text(f'Number of completed: {len(com_list)}'),
+         sg.Text(f'Percentage of completed: {len(com_list) / len(fam_list):.2%}')],
+        [sg.Text(f'Words count as completed when a word has more than 80% familiarity on 10 or more attempts.')],
+        [sg.Button('Back')]
+    ]
+
+    #Draw window and return
+    window = sg.Window('Progress', layout, finalize=True)
+    fig_canvas_agg = draw_figure(window['Canvas'].TKCanvas, fig)
+    return(window)
+
+
+# Progress window setup and event loop
+def progress_menu():
+    #Get full language data
+    topics_list = current_language.get_topics()
+    pos_list = current_language.get_pos()
+    fam_list = current_language.familiarities()
+    com_list = current_language.completed()
+
+    #Setup Menubar
+    globals()['prog_menu'] = [
+        ['All',['Global']],
+        ['Topic',topics_list],
+        ['Part of Speech',pos_list],
+    ]
+
+    #Use progress_layout function to draw initial window
+    window = progress_layout(current_language.data, 'Global')
+
+    #Event loop changes window according to event
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == 'Back':
+            break
+        else:
+            if event in topics_list:
+                data_set = current_language.get_words_topic(topic = event).reset_index()
+            if event in pos_list:
+                data_set = current_language.get_words_pos(pos = event).reset_index()
+            if event == 'Global':
+                data_set = current_language.data
+            window.close()
+            window = progress_layout(data_set, event)
+
+    window.close()
+
+
+# Figure function for histograms
+def draw_figure(canvas, figure):
+   figure_canvas_agg = tk.FigureCanvasTkAgg(figure, canvas)
+   figure_canvas_agg.draw()
+   figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+   return figure_canvas_agg
+
+
+
+#%% - RUN
+Esperanto = vocabulary()
+Esperanto.load_data("Esperanto.csv")
+
 startup_window()
-
-
-
-
-# testing arena
-if 1 == 0:
-    Esperanto = vocabulary()
-    Esperanto.load_data("Esperanto.csv")
-    topics_list = Esperanto.get_topics()
-    pos_list = Esperanto.get_pos()
-    #print(topics_list)
-    print(pos_list)
-    Esperanto.reset()
-    Esperanto.save_data("Esperanto.csv")
