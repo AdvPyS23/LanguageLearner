@@ -36,14 +36,14 @@ verda,green,vehr-dah,La arboj estas verdoj en la printempo.,colour,adjective,21,
 kolekti,to collect,koh-lehk-tee,Mi kolektas poŝtmarkojn.,hobbies,verb,4,0
 lerni,to learn,lehrr-nee,Mi volas lerni novan lingvon.,misc,verb,1,0
 manĝi,to eat,mahng-ee,Mi manĝas fruktojn por sanigi min.,food,verb,0,0
-vojaĝi,to travel,voyah-jee,Mi amas vojaĝi kaj vidi novajn lokojn.,hobbies,verb,1,0
+vojaĝi,to travel,voyah-jee,Mi amas vojaĝi kaj vidi novajn lokojn.,hobbies,verb,2,1
 dormi,to sleep,dohrr-mee,Mi bezonas dormi oka horojn ĉiun nokton.,misc,verb,0,0
 tago,day,tah-goh,Hodiaŭ estas bela tago por iri eksteren.,time,noun,1,1
 nokto,night,nohk-toh,La steloj brilas en la nokto.,time,noun,0,0
 rivero,river,ree-veh-roh,La rivero fluas tra la arbaro.,nature,noun,4,0
 maro,sea,mah-roh,La maro estas granda kaj profunda.,nature,noun,2,0
-sarki,archery,sahr-kee,Mi ŝatas praktiki sarkion en mia libera tempo.,hobbies,noun,1,0
-pikniki,to have a picnic,peek-nee-kee,Mi amuziĝas piknikante kun mia familio.,hobbies,verb,2,0
+sarki,archery,sahr-kee,Mi ŝatas praktiki sarkion en mia libera tempo.,hobbies,noun,2,0
+pikniki,to have a picnic,peek-nee-kee,Mi amuziĝas piknikante kun mia familio.,hobbies,verb,3,0
 arbo,tree,ahr-boh,Sub la arbo mi trovis ombregon.,nature,noun,4,2
 herbo,grass,hehr-boh,La herbo estas verda post la pluvo.,nature,noun,5,0
 montoĉeno,mountain range,mohn-tah-roh,La montaro estas spektakla vidindaĵo.,nature,noun,3,0
@@ -117,3 +117,4 @@ moto, motorcycle,mo-toh,Mia amiko ŝatas veturi per moto.,transportation,noun,1,
 ŝarĝaŭto,truck,shahr-jow-toh,La ŝarĝaŭto transpordas varojn.,transportation,noun,1,0
 veturilo,vehicle,vetoo-ree-lo,Mi ne povas elekti mian plej ŝatatan veturilon.,transportation,noun,0,0
 helikoptero,helicopter,hel-ee-kop-teh-ro,La helikoptero flugas super la urbo.,transportation,noun,0,0
+strigo,owl,stree-goh,strigoj estas saĝaj,nature,noun,0,0
